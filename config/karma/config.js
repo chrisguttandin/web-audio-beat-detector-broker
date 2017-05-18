@@ -49,8 +49,7 @@ module.exports = (config) => {
 
             browsers: [
                 'ChromeSauceLabs',
-                'FirefoxSauceLabs',
-                'SafariSauceLabs'
+                'FirefoxSauceLabs'
             ],
 
             captureTimeout: 120000,
@@ -64,11 +63,6 @@ module.exports = (config) => {
                 FirefoxSauceLabs: {
                     base: 'SauceLabs',
                     browserName: 'firefox',
-                    platform: 'OS X 10.11'
-                },
-                SafariSauceLabs: {
-                    base: 'SauceLabs',
-                    browserName: 'safari',
                     platform: 'OS X 10.11'
                 }
             },
@@ -85,8 +79,7 @@ module.exports = (config) => {
                 'Chrome',
                 'ChromeCanary',
                 'Firefox',
-                'FirefoxDeveloper',
-                'Safari'
+                'FirefoxDeveloper'
             ]
 
         });
