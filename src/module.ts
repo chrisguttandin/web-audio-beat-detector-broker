@@ -1,3 +1,4 @@
+import { isSupported } from 'standardized-audio-context';
 import { IAnalyzeRequest, IAnalyzeResponse, IGuessRequest, IGuessResponse, IWorkerEvent } from 'web-audio-beat-detector-worker';
 import { render } from './helpers/render';
 
@@ -12,6 +13,8 @@ const generateUniqueId = (set: Set<number>) => {
 
     return id;
 };
+
+export { isSupported };
 
 export const load = (url: string) => {
     const worker = new Worker(url);
