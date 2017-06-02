@@ -1,5 +1,7 @@
 # web-audio-beat-detector-broker
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/chrisguttandin/web-audio-beat-detector-broker.svg)](https://greenkeeper.io/)
+
 **The broker which is used by the web-audio-beat-detector package.**
 
 [![tests](https://img.shields.io/travis/chrisguttandin/web-audio-beat-detector-broker/master.svg?style=flat-square)](https://travis-ci.org/chrisguttandin/web-audio-beat-detector-broker)
