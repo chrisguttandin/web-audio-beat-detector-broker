@@ -4,7 +4,7 @@
     "url": "https://github.com/chrisguttandin/web-audio-beat-detector-broker/issues"
   },
   "dependencies": {
-    "standardized-audio-context": "^8.0.12",
+    "standardized-audio-context": "^8.0.14",
     "web-audio-beat-detector-worker": "^1.0.0"
   },
   "description": "The broker which is used by the web-audio-beat-detector package.",
