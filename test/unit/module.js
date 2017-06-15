@@ -51,11 +51,11 @@ describe('module', () => {
             };
         })(Worker);
 
-        const blob = new Blob([`
-            self.addEventListener('message', ({ data }) => {
+        const blob = new Blob([
+            `self.addEventListener('message', ({ data }) => {
                 self.postMessage(data);
-            });
-        `], { type: 'application/javascript' });
+            });`
+        ], { type: 'application/javascript' });
 
         webAudioBeatDetector = load(URL.createObjectURL(blob));
     });
