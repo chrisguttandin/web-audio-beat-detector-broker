@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "standardized-audio-context": "^9.2.0",
-    "web-audio-beat-detector-worker": "^1.0.0"
+    "web-audio-beat-detector-worker": "^2.0.0"
   },
   "description": "The broker which is used by the web-audio-beat-detector package.",
   "devDependencies": {
