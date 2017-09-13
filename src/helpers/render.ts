@@ -26,6 +26,6 @@ export const render = (audioBuffer: AudioBuffer, offset: number, duration: numbe
             const channelData = renderedBuffer.getChannelData(0);
             const sampleRate = renderedBuffer.sampleRate;
 
-            return { channelData, sampleRate };
+            return { channelData, sampleRate };
         });
 };

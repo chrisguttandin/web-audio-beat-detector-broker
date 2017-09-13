@@ -27,7 +27,7 @@ export const load = (url: string) => {
 
             const id = generateUniqueId(ongoingRecordingRequests);
 
-            const onMessage = ({ data }: IWorkerEvent) => {
+            const onMessage = ({ data }: IWorkerEvent) => {
                 if (data.id === id) {
                     ongoingRecordingRequests.delete(id);
 
@@ -53,7 +53,7 @@ export const load = (url: string) => {
 
             const id = generateUniqueId(ongoingRecordingRequests);
 
-            const onMessage = ({ data }: IWorkerEvent) => {
+            const onMessage = ({ data }: IWorkerEvent) => {
                 if (data.id === id) {
                     ongoingRecordingRequests.delete(id);
 
