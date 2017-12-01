@@ -1,18 +1,7 @@
+import { addUniqueNumber } from 'fast-unique-numbers';
 import { isSupported } from 'standardized-audio-context';
 import { IAnalyzeRequest, IAnalyzeResponse, IGuessRequest, IGuessResponse, IWorkerEvent } from 'web-audio-beat-detector-worker';
 import { render } from './helpers/render';
-
-const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || Math.pow(2, 53) - 1;
-
-const generateUniqueId = (set: Set<number>) => {
-    let id = Math.round(Math.random() * MAX_SAFE_INTEGER);
-
-    while (set.has(id)) {
-        id = Math.round(Math.random() * MAX_SAFE_INTEGER);
-    }
-
-    return id;
-};
 
 export { isSupported };
 
@@ -25,7 +14,7 @@ export const load = (url: string) => {
         return new Promise(async (resolve, reject) => {
             const { channelData, sampleRate } = await render(audioBuffer, offset, duration);
 
-            const id = generateUniqueId(ongoingRecordingRequests);
+            const id = addUniqueNumber(ongoingRecordingRequests);
 
             const onMessage = ({ data }: IWorkerEvent) => {
                 if (data.id === id) {
@@ -51,7 +40,7 @@ export const load = (url: string) => {
         return new Promise(async (resolve, reject) => {
             const { channelData, sampleRate } = await render(audioBuffer, offset, duration);
 
-            const id = generateUniqueId(ongoingRecordingRequests);
+            const id = addUniqueNumber(ongoingRecordingRequests);
 
             const onMessage = ({ data }: IWorkerEvent) => {
                 if (data.id === id) {
