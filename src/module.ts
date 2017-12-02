@@ -10,7 +10,7 @@ export const load = (url: string) => {
 
     const ongoingRecordingRequests: Set<number> = new Set();
 
-    const analyze = (audioBuffer: AudioBuffer, offset = 0, duration = audioBuffer.duration - offset) => {
+    const analyze = (audioBuffer: AudioBuffer, offset = 0, duration = audioBuffer.duration - offset): Promise<number> => {
         return new Promise(async (resolve, reject) => {
             const { channelData, sampleRate } = await render(audioBuffer, offset, duration);
 
@@ -38,7 +38,7 @@ export const load = (url: string) => {
 
     const guess = (
         audioBuffer: AudioBuffer, offset = 0, duration = audioBuffer.duration - offset
-    ) => {
+    ): Promise<{ bpm: number, offset: number }> => {
         return new Promise(async (resolve, reject) => {
             const { channelData, sampleRate } = await render(audioBuffer, offset, duration);
 
