@@ -36,7 +36,9 @@ export const load = (url: string) => {
         });
     };
 
-    const guess = (audioBuffer: AudioBuffer, offset = 0, duration = audioBuffer.duration - offset) => {
+    const guess = (
+        audioBuffer: AudioBuffer, offset = 0, duration = audioBuffer.duration - offset
+    ) => {
         return new Promise(async (resolve, reject) => {
             const { channelData, sampleRate } = await render(audioBuffer, offset, duration);
 
@@ -49,9 +51,7 @@ export const load = (url: string) => {
                     worker.removeEventListener('message', onMessage);
 
                     if (data.error === null) {
-                        const { bpm, offset } = (<IGuessResponse> data).result;
-
-                        resolve({ bpm, offset });
+                        resolve((<IGuessResponse> data).result);
                     } else {
                         reject(new Error(data.error.message));
                     }
