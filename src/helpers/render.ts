@@ -9,7 +9,7 @@ export const render = (audioBuffer: AudioBuffer, offset: number, duration: numbe
     const biquadFilter = offlineAudioContext.createBiquadFilter();
     const bufferSourceNode = offlineAudioContext.createBufferSource();
 
-    biquadFilter.frequency.value = 200;
+    biquadFilter.frequency.value = 240;
     biquadFilter.type = 'lowpass';
 
     bufferSourceNode.buffer = audioBuffer;
