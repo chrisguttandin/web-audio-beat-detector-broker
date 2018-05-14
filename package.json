@@ -13,7 +13,7 @@
     "fast-unique-numbers": "^2.0.0",
     "standardized-audio-context": "^12.1.8",
     "tslib": "^1.9.1",
-    "web-audio-beat-detector-worker": "^3.0.4"
+    "web-audio-beat-detector-worker": "^3.0.5"
   },
   "description": "The broker which is used by the web-audio-beat-detector package.",
   "devDependencies": {
