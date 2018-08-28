@@ -56,8 +56,11 @@ describe('module', () => {
                 self.postMessage(data);
             });`
         ], { type: 'application/javascript' });
+        const url = URL.createObjectURL(blob);
 
-        webAudioBeatDetector = load(URL.createObjectURL(blob));
+        webAudioBeatDetector = load(url);
+
+        URL.revokeObjectURL(url);
     });
 
     describe('analyze()', () => {
