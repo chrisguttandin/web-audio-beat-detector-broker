@@ -32,7 +32,10 @@ export const load = (url: string) => {
 
             worker.addEventListener('message', onMessage);
 
-            worker.postMessage(<IAnalyzeRequest> { id, method: 'analyze', params: { channelData, sampleRate } }, [ channelData.buffer ]);
+            worker.postMessage(
+                <IAnalyzeRequest> { id, method: 'analyze', params: { channelData, sampleRate } },
+                [ <ArrayBuffer> channelData.buffer ]
+            );
         });
     };
 
@@ -60,7 +63,10 @@ export const load = (url: string) => {
 
             worker.addEventListener('message', onMessage);
 
-            worker.postMessage(<IGuessRequest> { id, method: 'guess', params: { channelData, sampleRate } }, [ channelData.buffer ]);
+            worker.postMessage(
+                <IGuessRequest> { id, method: 'guess', params: { channelData, sampleRate } },
+                [ <ArrayBuffer> channelData.buffer ]
+            );
         });
     };
 
