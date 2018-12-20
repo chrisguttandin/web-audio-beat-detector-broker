@@ -41,7 +41,7 @@ export const load = (url: string) => {
 
     const guess = (
         audioBuffer: AudioBuffer, offset = 0, duration = audioBuffer.duration - offset
-    ): Promise<{ bpm: number, offset: number }> => {
+    ): Promise<{ bpm: number; offset: number }> => {
         return new Promise(async (resolve, reject) => {
             const { channelData, sampleRate } = await render(audioBuffer, offset, duration);
 
