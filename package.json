@@ -11,7 +11,7 @@
   "dependencies": {
     "@babel/runtime": "^7.6.2",
     "fast-unique-numbers": "^4.0.9",
-    "standardized-audio-context": "^21.2.4",
+    "standardized-audio-context": "^22.0.0",
     "tslib": "^1.10.0",
     "web-audio-beat-detector-worker": "^4.0.20"
   },
