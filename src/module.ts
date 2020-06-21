@@ -23,7 +23,7 @@ export const load = (url: string) => {
                     worker.removeEventListener('message', onMessage);
 
                     if (data.error === null) {
-                        resolve((<IAnalyzeResponse> data).result.tempo);
+                        resolve((<IAnalyzeResponse>data).result.tempo);
                     } else {
                         reject(new Error(data.error.message));
                     }
@@ -32,15 +32,16 @@ export const load = (url: string) => {
 
             worker.addEventListener('message', onMessage);
 
-            worker.postMessage(
-                <IAnalyzeRequest> { id, method: 'analyze', params: { channelData, sampleRate } },
-                [ <ArrayBuffer> channelData.buffer ]
-            );
+            worker.postMessage(<IAnalyzeRequest>{ id, method: 'analyze', params: { channelData, sampleRate } }, [
+                <ArrayBuffer>channelData.buffer
+            ]);
         });
     };
 
     const guess = (
-        audioBuffer: AudioBuffer, offset = 0, duration = audioBuffer.duration - offset
+        audioBuffer: AudioBuffer,
+        offset = 0,
+        duration = audioBuffer.duration - offset
     ): Promise<{ bpm: number; offset: number }> => {
         return new Promise(async (resolve, reject) => {
             const { channelData, sampleRate } = await render(audioBuffer, offset, duration);
@@ -54,7 +55,7 @@ export const load = (url: string) => {
                     worker.removeEventListener('message', onMessage);
 
                     if (data.error === null) {
-                        resolve((<IGuessResponse> data).result);
+                        resolve((<IGuessResponse>data).result);
                     } else {
                         reject(new Error(data.error.message));
                     }
@@ -63,10 +64,9 @@ export const load = (url: string) => {
 
             worker.addEventListener('message', onMessage);
 
-            worker.postMessage(
-                <IGuessRequest> { id, method: 'guess', params: { channelData, sampleRate } },
-                [ <ArrayBuffer> channelData.buffer ]
-            );
+            worker.postMessage(<IGuessRequest>{ id, method: 'guess', params: { channelData, sampleRate } }, [
+                <ArrayBuffer>channelData.buffer
+            ]);
         });
     };
 

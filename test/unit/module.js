@@ -2,7 +2,6 @@ import { OfflineAudioContext } from 'standardized-audio-context';
 import { load } from '../../src/module';
 
 describe('module', () => {
-
     let offlineAudioContext;
     let sampleRate;
     let webAudioBeatDetector;
@@ -16,12 +15,12 @@ describe('module', () => {
 
         offlineAudioContext = new OfflineAudioContext(1, 1, sampleRate);
 
-        Worker = ((OriginalWorker) => { // eslint-disable-line no-global-assign
+        // eslint-disable-next-line no-global-assign
+        Worker = ((OriginalWorker) => {
             const instances = [];
 
             return class ExtendedWorker extends OriginalWorker {
-
-                constructor (url) {
+                constructor(url) {
                     super(url);
 
                     const addEventListener = this.addEventListener;
@@ -36,26 +35,29 @@ describe('module', () => {
                     instances.push(this);
                 }
 
-                static addEventListener (index, ...args) {
+                static addEventListener(index, ...args) {
                     return instances[index].addEventListener(index, ...args);
                 }
 
-                static get instances () {
+                static get instances() {
                     return instances;
                 }
 
-                static reset () {
-                    Worker = OriginalWorker; // eslint-disable-line no-global-assign
+                static reset() {
+                    // eslint-disable-next-line no-global-assign
+                    Worker = OriginalWorker;
                 }
-
             };
         })(Worker);
 
-        const blob = new Blob([
-            `self.addEventListener('message', ({ data }) => {
+        const blob = new Blob(
+            [
+                `self.addEventListener('message', ({ data }) => {
                 self.postMessage(data);
             });`
-        ], { type: 'application/javascript' });
+            ],
+            { type: 'application/javascript' }
+        );
         const url = URL.createObjectURL(blob);
 
         webAudioBeatDetector = load(url);
@@ -64,7 +66,6 @@ describe('module', () => {
     });
 
     describe('analyze()', () => {
-
         let audioBuffer;
 
         beforeEach(() => {
@@ -90,11 +91,9 @@ describe('module', () => {
 
             webAudioBeatDetector.analyze(audioBuffer);
         });
-
     });
 
     describe('guess()', () => {
-
         let audioBuffer;
 
         beforeEach(() => {
@@ -120,7 +119,5 @@ describe('module', () => {
 
             webAudioBeatDetector.guess(audioBuffer);
         });
-
     });
-
 });

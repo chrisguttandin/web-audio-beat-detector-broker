@@ -14,18 +14,14 @@ export const render = (audioBuffer: AudioBuffer, offset: number, duration: numbe
 
     bufferSourceNode.buffer = audioBuffer;
 
-    bufferSourceNode
-        .connect(biquadFilter)
-        .connect(offlineAudioContext.destination);
+    bufferSourceNode.connect(biquadFilter).connect(offlineAudioContext.destination);
 
     bufferSourceNode.start(0, offset, duration);
 
-    return offlineAudioContext
-        .startRendering()
-        .then((renderedBuffer) => {
-            const channelData = renderedBuffer.getChannelData(0);
-            const sampleRate = renderedBuffer.sampleRate;
+    return offlineAudioContext.startRendering().then((renderedBuffer) => {
+        const channelData = renderedBuffer.getChannelData(0);
+        const sampleRate = renderedBuffer.sampleRate;
 
-            return { channelData, sampleRate };
-        });
+        return { channelData, sampleRate };
+    });
 };
