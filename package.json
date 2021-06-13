@@ -12,7 +12,7 @@
         "@babel/runtime": "^7.14.5",
         "fast-unique-numbers": "^6.0.2",
         "standardized-audio-context": "^25.2.6",
-        "tslib": "^2.2.0",
+        "tslib": "^2.3.0",
         "web-audio-beat-detector-worker": "^5.2.8"
     },
     "description": "The broker which is used by the web-audio-beat-detector package.",
