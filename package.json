@@ -11,13 +11,14 @@
     "dependencies": {
         "@babel/runtime": "^7.22.10",
         "fast-unique-numbers": "^8.0.7",
+        "linked": "^0.2.0",
         "standardized-audio-context": "^25.3.55",
         "tslib": "^2.6.1",
         "web-audio-beat-detector-worker": "^5.2.41"
     },
     "description": "The broker which is used by the web-audio-beat-detector package.",
     "devDependencies": {
-        "@babel/core": "^7.22.10",
+        "@babel/core": "^7.22.19",
         "@babel/plugin-external-helpers": "^7.22.5",
         "@babel/plugin-transform-runtime": "^7.22.10",
         "@babel/preset-env": "^7.22.10",
