@@ -3,7 +3,7 @@ import { OfflineAudioContext } from 'standardized-audio-context';
 export const render = (audioBuffer: AudioBuffer, offset: number, duration: number) => {
     const offlineAudioContext = new OfflineAudioContext(
         audioBuffer.numberOfChannels,
-        duration * audioBuffer.sampleRate,
+        Math.round(duration * audioBuffer.sampleRate),
         audioBuffer.sampleRate
     );
     const biquadFilter = offlineAudioContext.createBiquadFilter();
