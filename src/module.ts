@@ -2,6 +2,13 @@ import { addUniqueNumber } from 'fast-unique-numbers';
 import { isSupported } from 'standardized-audio-context';
 import { IAnalyzeRequest, IAnalyzeResponse, IGuessRequest, IGuessResponse, IWorkerEvent } from 'web-audio-beat-detector-worker';
 import { render } from './helpers/render';
+import { TArgs } from './types';
+
+/*
+ * @todo Explicitly referencing the barrel file seems to be necessary when enabling the
+ * isolatedModules compiler option.
+ */
+export * from './types/index';
 
 export { isSupported };
 
@@ -10,7 +17,17 @@ export const load = (url: string) => {
 
     const ongoingRecordingRequests: Set<number> = new Set();
 
-    const analyze = (audioBuffer: AudioBuffer, offset = 0, duration = audioBuffer.duration - offset): Promise<number> => {
+    const analyze = (...args: TArgs): Promise<number> => {
+        const [audioBuffer, offsetOrTempoSettings, durationOrTempoSettings] = args;
+        const offset = typeof offsetOrTempoSettings === 'number' ? offsetOrTempoSettings : 0;
+        const duration = typeof durationOrTempoSettings === 'number' ? durationOrTempoSettings : audioBuffer.duration - offset;
+        const tempoSettings =
+            typeof offsetOrTempoSettings === 'object'
+                ? offsetOrTempoSettings
+                : typeof durationOrTempoSettings === 'object'
+                  ? durationOrTempoSettings
+                  : args[3] ?? null;
+
         return new Promise(async (resolve, reject) => {
             const { channelData, sampleRate } = await render(audioBuffer, offset, duration);
 
@@ -32,17 +49,28 @@ export const load = (url: string) => {
 
             worker.addEventListener('message', onMessage);
 
-            worker.postMessage(<IAnalyzeRequest>{ id, method: 'analyze', params: { channelData, sampleRate } }, [
-                <ArrayBuffer>channelData.buffer
-            ]);
+            worker.postMessage(
+                <IAnalyzeRequest>{
+                    id,
+                    method: 'analyze',
+                    params: { channelData, sampleRate, ...(tempoSettings === null ? tempoSettings : { tempoSettings }) }
+                },
+                [<ArrayBuffer>channelData.buffer]
+            );
         });
     };
 
-    const guess = (
-        audioBuffer: AudioBuffer,
-        offset = 0,
-        duration = audioBuffer.duration - offset
-    ): Promise<{ bpm: number; offset: number }> => {
+    const guess = (...args: TArgs): Promise<{ bpm: number; offset: number }> => {
+        const [audioBuffer, offsetOrTempoSettings, durationOrTempoSettings] = args;
+        const offset = typeof offsetOrTempoSettings === 'number' ? offsetOrTempoSettings : 0;
+        const duration = typeof durationOrTempoSettings === 'number' ? durationOrTempoSettings : audioBuffer.duration - offset;
+        const tempoSettings =
+            typeof offsetOrTempoSettings === 'object'
+                ? offsetOrTempoSettings
+                : typeof durationOrTempoSettings === 'object'
+                  ? durationOrTempoSettings
+                  : args[3] ?? null;
+
         return new Promise(async (resolve, reject) => {
             const { channelData, sampleRate } = await render(audioBuffer, offset, duration);
 
@@ -64,9 +92,14 @@ export const load = (url: string) => {
 
             worker.addEventListener('message', onMessage);
 
-            worker.postMessage(<IGuessRequest>{ id, method: 'guess', params: { channelData, sampleRate } }, [
-                <ArrayBuffer>channelData.buffer
-            ]);
+            worker.postMessage(
+                <IGuessRequest>{
+                    id,
+                    method: 'guess',
+                    params: { channelData, sampleRate, ...(tempoSettings === null ? tempoSettings : { tempoSettings }) }
+                },
+                [<ArrayBuffer>channelData.buffer]
+            );
         });
     };
 

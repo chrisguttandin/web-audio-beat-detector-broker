@@ -72,24 +72,168 @@ describe('module', () => {
             audioBuffer = offlineAudioContext.createBuffer(1, 2000, sampleRate);
         });
 
-        it('should send the correct message', (done) => {
-            Worker.addEventListener(0, 'message', ({ data }) => {
-                expect(data.id).to.be.a('number');
+        describe('without any additional arguments', () => {
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
 
-                const channelData = data.params.channelData;
+                    const channelData = data.params.channelData;
 
-                expect(channelData.length).to.equal(audioBuffer.length);
+                    expect(channelData.length).to.equal(audioBuffer.length);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'analyze',
+                        params: { channelData, sampleRate }
+                    });
 
-                expect(data).to.deep.equal({
-                    id: data.id,
-                    method: 'analyze',
-                    params: { channelData, sampleRate }
+                    done();
                 });
 
-                done();
+                webAudioBeatDetector.analyze(audioBuffer);
+            });
+        });
+
+        describe('with an offset', () => {
+            let offset;
+
+            beforeEach(() => {
+                offset = 500 / sampleRate;
             });
 
-            webAudioBeatDetector.analyze(audioBuffer);
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
+
+                    const channelData = data.params.channelData;
+
+                    expect(channelData.length).to.equal(audioBuffer.length - offset * sampleRate);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'analyze',
+                        params: { channelData, sampleRate }
+                    });
+
+                    done();
+                });
+
+                webAudioBeatDetector.analyze(audioBuffer, offset);
+            });
+        });
+
+        describe('with a tempoSettings object', () => {
+            let tempoSettings;
+
+            beforeEach(() => {
+                tempoSettings = { a: 'fake', tempoSettings: 'object' };
+            });
+
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
+
+                    const channelData = data.params.channelData;
+
+                    expect(channelData.length).to.equal(audioBuffer.length);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'analyze',
+                        params: { channelData, sampleRate, tempoSettings }
+                    });
+
+                    done();
+                });
+
+                webAudioBeatDetector.analyze(audioBuffer, tempoSettings);
+            });
+        });
+
+        describe('with an offset and a duration', () => {
+            let duration;
+            let offset;
+
+            beforeEach(() => {
+                duration = 1000 / sampleRate;
+                offset = 500 / sampleRate;
+            });
+
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
+
+                    const channelData = data.params.channelData;
+
+                    expect(channelData.length).to.equal(duration * sampleRate);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'analyze',
+                        params: { channelData, sampleRate }
+                    });
+
+                    done();
+                });
+
+                webAudioBeatDetector.analyze(audioBuffer, offset, duration);
+            });
+        });
+
+        describe('with an offset and a tempoSettings object', () => {
+            let offset;
+            let tempoSettings;
+
+            beforeEach(() => {
+                offset = 500 / sampleRate;
+                tempoSettings = { a: 'fake', tempoSettings: 'object' };
+            });
+
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
+
+                    const channelData = data.params.channelData;
+
+                    expect(channelData.length).to.equal(audioBuffer.length - offset * sampleRate);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'analyze',
+                        params: { channelData, sampleRate, tempoSettings }
+                    });
+
+                    done();
+                });
+
+                webAudioBeatDetector.analyze(audioBuffer, offset, tempoSettings);
+            });
+        });
+
+        describe('with an offset, a duration and a tempoSettings object', () => {
+            let duration;
+            let offset;
+            let tempoSettings;
+
+            beforeEach(() => {
+                duration = 1000 / sampleRate;
+                offset = 500 / sampleRate;
+                tempoSettings = { a: 'fake', tempoSettings: 'object' };
+            });
+
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
+
+                    const channelData = data.params.channelData;
+
+                    expect(channelData.length).to.equal(duration * sampleRate);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'analyze',
+                        params: { channelData, sampleRate, tempoSettings }
+                    });
+
+                    done();
+                });
+
+                webAudioBeatDetector.analyze(audioBuffer, offset, duration, tempoSettings);
+            });
         });
     });
 
@@ -100,24 +244,168 @@ describe('module', () => {
             audioBuffer = offlineAudioContext.createBuffer(1, 2000, sampleRate);
         });
 
-        it('should send the correct message', (done) => {
-            Worker.addEventListener(0, 'message', ({ data }) => {
-                expect(data.id).to.be.a('number');
+        describe('without any additional arguments', () => {
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
 
-                const channelData = data.params.channelData;
+                    const channelData = data.params.channelData;
 
-                expect(channelData.length).to.equal(audioBuffer.length);
+                    expect(channelData.length).to.equal(audioBuffer.length);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'guess',
+                        params: { channelData, sampleRate }
+                    });
 
-                expect(data).to.deep.equal({
-                    id: data.id,
-                    method: 'guess',
-                    params: { channelData, sampleRate }
+                    done();
                 });
 
-                done();
+                webAudioBeatDetector.guess(audioBuffer);
+            });
+        });
+
+        describe('with an offset', () => {
+            let offset;
+
+            beforeEach(() => {
+                offset = 500 / sampleRate;
             });
 
-            webAudioBeatDetector.guess(audioBuffer);
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
+
+                    const channelData = data.params.channelData;
+
+                    expect(channelData.length).to.equal(audioBuffer.length - offset * sampleRate);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'guess',
+                        params: { channelData, sampleRate }
+                    });
+
+                    done();
+                });
+
+                webAudioBeatDetector.guess(audioBuffer, offset);
+            });
+        });
+
+        describe('with a tempoSettings object', () => {
+            let tempoSettings;
+
+            beforeEach(() => {
+                tempoSettings = { a: 'fake', tempoSettings: 'object' };
+            });
+
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
+
+                    const channelData = data.params.channelData;
+
+                    expect(channelData.length).to.equal(audioBuffer.length);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'guess',
+                        params: { channelData, sampleRate, tempoSettings }
+                    });
+
+                    done();
+                });
+
+                webAudioBeatDetector.guess(audioBuffer, tempoSettings);
+            });
+        });
+
+        describe('with an offset and a duration', () => {
+            let duration;
+            let offset;
+
+            beforeEach(() => {
+                duration = 1000 / sampleRate;
+                offset = 500 / sampleRate;
+            });
+
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
+
+                    const channelData = data.params.channelData;
+
+                    expect(channelData.length).to.equal(duration * sampleRate);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'guess',
+                        params: { channelData, sampleRate }
+                    });
+
+                    done();
+                });
+
+                webAudioBeatDetector.guess(audioBuffer, offset, duration);
+            });
+        });
+
+        describe('with an offset and a tempoSettings object', () => {
+            let offset;
+            let tempoSettings;
+
+            beforeEach(() => {
+                offset = 500 / sampleRate;
+                tempoSettings = { a: 'fake', tempoSettings: 'object' };
+            });
+
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
+
+                    const channelData = data.params.channelData;
+
+                    expect(channelData.length).to.equal(audioBuffer.length - offset * sampleRate);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'guess',
+                        params: { channelData, sampleRate, tempoSettings }
+                    });
+
+                    done();
+                });
+
+                webAudioBeatDetector.guess(audioBuffer, offset, tempoSettings);
+            });
+        });
+
+        describe('with an offset, a duration and a tempoSettings object', () => {
+            let duration;
+            let offset;
+            let tempoSettings;
+
+            beforeEach(() => {
+                duration = 1000 / sampleRate;
+                offset = 500 / sampleRate;
+                tempoSettings = { a: 'fake', tempoSettings: 'object' };
+            });
+
+            it('should send the correct message', (done) => {
+                Worker.addEventListener(0, 'message', ({ data }) => {
+                    expect(data.id).to.be.a('number');
+
+                    const channelData = data.params.channelData;
+
+                    expect(channelData.length).to.equal(duration * sampleRate);
+                    expect(data).to.deep.equal({
+                        id: data.id,
+                        method: 'guess',
+                        params: { channelData, sampleRate, tempoSettings }
+                    });
+
+                    done();
+                });
+
+                webAudioBeatDetector.guess(audioBuffer, offset, duration, tempoSettings);
+            });
         });
     });
 });
