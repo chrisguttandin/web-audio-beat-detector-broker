@@ -1,3 +1,4 @@
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { OfflineAudioContext } from 'standardized-audio-context';
 import { load } from '../../src/module';
 
@@ -73,7 +74,9 @@ describe('module', () => {
         });
 
         describe('without any additional arguments', () => {
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -86,10 +89,12 @@ describe('module', () => {
                         params: { channelData, sampleRate }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.analyze(audioBuffer);
+
+                return promise;
             });
         });
 
@@ -100,7 +105,9 @@ describe('module', () => {
                 offset = 500 / sampleRate;
             });
 
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -113,10 +120,12 @@ describe('module', () => {
                         params: { channelData, sampleRate }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.analyze(audioBuffer, offset);
+
+                return promise;
             });
         });
 
@@ -127,7 +136,9 @@ describe('module', () => {
                 tempoSettings = { a: 'fake', tempoSettings: 'object' };
             });
 
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -140,10 +151,12 @@ describe('module', () => {
                         params: { channelData, sampleRate, tempoSettings }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.analyze(audioBuffer, tempoSettings);
+
+                return promise;
             });
         });
 
@@ -156,7 +169,9 @@ describe('module', () => {
                 offset = 500 / sampleRate;
             });
 
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -169,10 +184,12 @@ describe('module', () => {
                         params: { channelData, sampleRate }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.analyze(audioBuffer, offset, duration);
+
+                return promise;
             });
         });
 
@@ -185,7 +202,9 @@ describe('module', () => {
                 tempoSettings = { a: 'fake', tempoSettings: 'object' };
             });
 
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -198,10 +217,12 @@ describe('module', () => {
                         params: { channelData, sampleRate, tempoSettings }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.analyze(audioBuffer, offset, tempoSettings);
+
+                return promise;
             });
         });
 
@@ -216,7 +237,9 @@ describe('module', () => {
                 tempoSettings = { a: 'fake', tempoSettings: 'object' };
             });
 
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -229,10 +252,12 @@ describe('module', () => {
                         params: { channelData, sampleRate, tempoSettings }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.analyze(audioBuffer, offset, duration, tempoSettings);
+
+                return promise;
             });
         });
     });
@@ -245,7 +270,9 @@ describe('module', () => {
         });
 
         describe('without any additional arguments', () => {
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -258,10 +285,12 @@ describe('module', () => {
                         params: { channelData, sampleRate }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.guess(audioBuffer);
+
+                return promise;
             });
         });
 
@@ -272,7 +301,9 @@ describe('module', () => {
                 offset = 500 / sampleRate;
             });
 
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -285,10 +316,12 @@ describe('module', () => {
                         params: { channelData, sampleRate }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.guess(audioBuffer, offset);
+
+                return promise;
             });
         });
 
@@ -299,7 +332,9 @@ describe('module', () => {
                 tempoSettings = { a: 'fake', tempoSettings: 'object' };
             });
 
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -312,10 +347,12 @@ describe('module', () => {
                         params: { channelData, sampleRate, tempoSettings }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.guess(audioBuffer, tempoSettings);
+
+                return promise;
             });
         });
 
@@ -328,7 +365,9 @@ describe('module', () => {
                 offset = 500 / sampleRate;
             });
 
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -341,10 +380,12 @@ describe('module', () => {
                         params: { channelData, sampleRate }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.guess(audioBuffer, offset, duration);
+
+                return promise;
             });
         });
 
@@ -357,7 +398,9 @@ describe('module', () => {
                 tempoSettings = { a: 'fake', tempoSettings: 'object' };
             });
 
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -370,10 +413,12 @@ describe('module', () => {
                         params: { channelData, sampleRate, tempoSettings }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.guess(audioBuffer, offset, tempoSettings);
+
+                return promise;
             });
         });
 
@@ -388,7 +433,9 @@ describe('module', () => {
                 tempoSettings = { a: 'fake', tempoSettings: 'object' };
             });
 
-            it('should send the correct message', (done) => {
+            it('should send the correct message', () => {
+                const { promise, resolve } = Promise.withResolvers();
+
                 Worker.addEventListener(0, 'message', ({ data }) => {
                     expect(data.id).to.be.a('number');
 
@@ -401,10 +448,12 @@ describe('module', () => {
                         params: { channelData, sampleRate, tempoSettings }
                     });
 
-                    done();
+                    resolve();
                 });
 
                 webAudioBeatDetector.guess(audioBuffer, offset, duration, tempoSettings);
+
+                return promise;
             });
         });
     });
